@@ -1,0 +1,81 @@
+@charset "UTF-8";
+
+
+#selectViewTB{
+	position: static;
+	left:70%;
+}
+
+.selectView{
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+	min-width: 400px;
+	border-radius: 5px 5px 0 0;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+.selectView thead tr{
+	background-color: #009879;
+	color:#ffffff;
+	text-align: left;
+	font-weight: bold;
+}
+.selectView th,
+.selectView td{
+	padding: 12px 15px;
+}
+.selectView tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+.selectView tbody tr:nth-of-type(even){
+	background-color: #f3f3f3;
+	
+}
+.selectView tbody tr:last-of-type{
+	border-bottom: 2px solid #009879;
+}
+
+
+#insertViewTB{
+	margin-left:90%;
+	position: static;
+	left:60%;
+
+}
+
+.insertView{
+	border-collapse: collapse;
+	margin: 5px 0;
+	font-size: 0.9em;
+	min-width: 700px;
+	min-height: 300px;
+	border-radius: 5px 5px 0 0;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+.insertView thead tr{
+	background-color: #009879;
+	color:#ffffff;
+	text-align: left;
+	font-weight: bold;
+}
+
+.insertView th,
+.insertView td{
+	padding: 12px 15px;
+}
+.insertView tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+.insertView tbody tr:nth-of-type(even){
+	background-color: #f3f3f3;
+	
+}
+.insertView tbody tr:last-of-type{
+	border-bottom: 2px solid #009879;
+}
+
+
+

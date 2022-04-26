@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.org{
+	width: 130px;
+	height: 50px;
+	display: inline-block;
+	color: red;
+}
+
+.orgNm{
+	display: inline-block;
+	color: black;
+}

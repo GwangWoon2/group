@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<div class="header">
+	<div align="center">
+		<button class="butn" onclick="location.href='orgChart'">조직도</button>
+		<button class="butn" onclick="location.href='/'">사용자 관리</button>
+	</div>
+	
+	<div id="selectEmp" align="center">
+		<form action="/selectNm" th:object="${empNm}" method="get">
+		이름:<input placeholder="이름을 입력하세요" id="selectinput" name="empNm">
+		<button id=selectbtn>검색</button>
+		</form>
+	</div>
+</div>
+</html>

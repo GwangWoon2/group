@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default_layout}">
+<link th:href="@{/css/body.css}" rel="stylesheet" />
+<th:block layout:fragment="head">
+	<title>Spring Boot</title>
+	<!--/* css */-->
+	<link th:href="@{/css/header.css}" rel="stylesheet" />
+	<link th:href="@{/css/body.css}" rel="stylesheet" />
+	<link th:href="@{/css/buttoncss.css}" rel="stylesheet" />
+	<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+	<script type="text/javascript" th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/modal.js}"></script>
+
+	<link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css}" rel="stylesheet" />
+
+	<link th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css}" rel="stylesheet" />
+
+</th:block>
+<body>
+	<th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
+	<div layout:fragment="content" class="content">
+	<div>
+		<table>
+			<tr>
+				<td>
+				<div id="selectViewTB">
+			<table border="1" class="selectView">
+			<thead>
+				<tr>
+					<td>id</td>
+					<td>사원명</td>
+					<td>부서</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="emps : ${emps}" class="status">
+					<td th:text="${emps.empId}"></td>
+					<td th:text="${emps.empNm}"></td>
+					<td th:text="${emps.deptNm}"></td>
+				</tr>
+			</tbody>
+			</table>
+		</div></td>
+				
+				<td>
+				<div id="insertViewTB">
+			<form action="/updateEmp" method="post" name="empInfo" onsubmit='return delconfrim();'>
+			<table border="1" class="insertView">
+			<tbody>
+			<thead>
+				<tr>
+					<td>목록</td>
+					<td>입력</td>
+				</tr>
+			</thead>
+				<tr>
+					<td>id</td>
+					<td><input placeholder="id를 입력하세요" name="empId" id="empId" readonly></td>
+				</tr>
+				<tr>
+					<td>사원명</td>
+					<td><input placeholder="이름을 입력하세요" name="empNm" id="empNm"></td>
+				</tr>
+				<tr>
+					<td>부서</td>
+					<td>
+						<select id="deptSelect" name="deptId">
+							<th:block th:each="depts : ${depts}">
+                              <option th:id="${depts.deptId}" th:text="${depts.deptNm}" th:value="${depts.deptId}" th:name="${depts.deptId}"></option>
+                           </th:block>
+			 	 		</select>
+			 	 	</td>
+				</tr>
+				<tr>
+				<td>직급</td>
+					<td>
+					<select id="jbgdNm" name="jbgdNm">
+							<option id="사원" value="사원">사원</option>		
+							<option id="대리" value="대리">대리</option>		
+							<option id="차장" value="차장">차장</option>
+							<option id="부장" value="부장">부장</option>		
+			 		</select>
+			 		</td>
+				</tr>
+				<tr>
+					<td>전화번호</td>
+					<td><input placeholder="전화번호를 입력하세요" name="mblTelNo" id="mblTelNo" maxlength="11"></td>
+				</tr>
+				<tr>
+					<td>주소</td>
+					<td><input placeholder="주소를 입력하세요" name="roadNmAdd" id="roadNmAdd"></td>
+				</tr>
+				<tr>
+					<td>취미</td>
+					<td>
+					<th:block th:each="hobbys : ${hobbys}">
+                       <input th:name="hobbycheck" th:type="checkbox" th:text="${hobbys.hobbyNm}"
+                       th:value="${hobbys.hobbyCode}" th:id="${hobbys.hobbyCode}">
+                   </th:block>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<button type="submit" id="updatbtn">수정</button>
+			<button type="submit" id="deletebtn" formaction="/deleteEmp">삭제</button>
+			</form>
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" id="modalBtn">신규등록하기</button>
+				
+				</td>
+			</tr>
+		</table>
+	</div>
+		</div>
+	</div>
+<!-- 팝업창(모달) -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">사용자 등록</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+          <div class="f1">사원명:<input placeholder="이름을 입력하세요" name="mempNm" id="mempNm"></div><p>
+          <div class="f1">부서:<select id="mdeptId">
+								<th:block th:each="depts : ${depts}">
+                              		<option th:text="${depts.deptNm}" th:value="${depts.deptId}"></option>
+                           		</th:block>
+			 	 			   </select></div><p>
+		 <div class="f1">직급:<select id="mjbgdNm">
+								<option value="사원">사원</option>		
+								<option value="대리">대리</option>		
+								<option value="차장">차장</option>
+								<option value="부장">부장</option>		
+			 				  </select></div><p>
+          <div class="f1">전화번호<input placeholder="전화번호를 입력하세요" name="mMblTelNo" id="mMblTelNo" maxlength="11"></div><p>
+   		  <div class="f1">주소<input placeholder="주소를 입력하세요" name="mRoadNmAdd" id="mRoadNmAdd"></div><p>
+         <div class="f1">취미
+         			<th:block th:each="hobbys : ${hobbys}">
+                       <input th:name="hobbycheck" th:type="checkbox" th:text="${hobbys.hobbyNm}" 
+                       th:value="${hobbys.hobbyCode}" th:id="${hobbys.hobbyCode}">
+                   </th:block>
+          	</div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="b1">보내기</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button> <!--모달 데이터를 해산시킨다. -->
+      </div>
+    </div>
+  </div>
+</div>
+	
+	<th:block layout:fragment="footer" th:include="@{/fragments/footer}">
+		
+	</th:block>
+</body>
+<script th:inline="javascript">
+
+/*<![CDATA[*/
+
+$(function(){
+	
+	
+	
+	$("#updatbtn").click(function(){
+		if(confirm("수정하시겠습니까?")==true){
+			
+		}else{
+			return false;
+		}
+	})	
+	
+	$("#deletebtn").click(function(){
+		if(confirm("정말삭제하시겠습니까?")==true){
+
+		}else{
+			return false;
+		}
+	})	
+	
+	
+	$('.status').each(function(){
+			
+		$(this).click(function(){
+			
+	
+			let obj =[[${emps}]];
+			var no = $(this).parent().find("tr").index(this);
+			var hblist=[];
+			var empid= obj[no].empId
+			
+			$.getJSON("/hobbylist?empId="+empid, function(hobbylist){
+				
+				for(var i=0; i<5; i++){
+					if(!(hobbylist[i]==null)){
+						hblist[i]=hobbylist[i];
+					}	
+				}
+				
+				
+				for(var i=0; i<5; i++) {
+					 var hb=["HB1","HB2","HB3","HB4","HB5"];
+					 $('input[id='+hb[i]+']').attr('checked',false);
+	             };
+		
+				for(var i=0; i<hblist.length; i++){
+					$('input[id='+hblist[i]+']').attr('checked',"checked");
+				}
+			});
+			
+			$('input[name=empId]').attr('value',obj[no].empId);
+			$('input[name=empNm]').attr('value',obj[no].empNm);
+			
+			for(var i=0; i<4; i++) {
+				 var dep=["D1","D2","D3","D4"];
+				 var jbg=["사원","대리","차장","부장"];
+				 $('option[id='+dep[i]+']').attr('selected',false);
+				 $('option[id='+jbg[i]+']').attr('selected',false);
+            };
+            			
+            $('option[id='+obj[no].deptId+']').attr('selected',"selected");
+            $('option[id='+obj[no].jbgdNm+']').attr('selected',"selected");
+			$('input[name=mblTelNo]').attr('value',obj[no].mblTelNo);
+			$('input[name=roadNmAdd]').attr('value',obj[no].roadNmAdd);
+		});
+	})
+	
+	
+	$("#b1").click(function(){
+		let e1=$("#mjbgdNm").val();
+		let e2=$("#mempNm").val();
+		let e3=$("#mdeptId").val();
+		let e4=$("#mMblTelNo").val();
+		let e5=$("#mRoadNmAdd").val();
+		var hb=[];
+		if($('input:checkbox[id="HB1"]').is(":checked")==true){
+				hb[0]="HB1";
+			}
+		if($('input:checkbox[id="HB2"]').is(":checked")==true){
+				hb[1]="HB2";
+			}
+		if($('input:checkbox[id="HB3"]').is(":checked")==true){
+				hb[2]="HB3";
+			}
+		if($('input:checkbox[id="HB4"]').is(":checked")==true){
+				hb[3]="HB4";
+			}
+		if($('input:checkbox[id="HB5"]').is(":checked")==true){
+				hb[4]="HB5";
+			}
+		let e6=hb[0]+","+hb[1]+","+hb[2]+","+hb[3]+","+hb[4];
+		
+		$.post("http://localhost:9792/insertEmp",
+				{	
+					jbgdNm:e1,
+					empNm:e2,
+					deptId:e3,
+					mblTelNo:e4,
+					roadNmAdd:e5,
+					hobbyCode:e6
+				}
+			);
+	});	
+})
+
+
+</script>
+</html>

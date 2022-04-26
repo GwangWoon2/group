@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dsi.group.mapper.GroupWareMapper">
+	
+	<select id="empIdList" resultType="String">
+	SELECT EMP_ID
+			FROM TBL_EMP
+				ORDER BY length (EMP_ID),(EMP_ID)
+	</select>
+	
+	
+	<select id="hobbyCode" resultType="Hobby">
+		SELECT *
+			FROM TBL_HOBBY
+	</select>
+	
+	<select id="deptCode" resultType="Dept">
+		SELECT *
+			FROM TBL_DEPT
+	</select>
+	
+	
+	<select id="selectEmp2" resultType="Emp" parameterType="java.lang.String">
+		SELECT EMP_ID,EMP_NM,DEPT_ID,JBGD_NM,MBL_TELNO,ROAD_NM_ADD,DEPT_NM
+			FROM TBL_EMP 
+				NATURAL JOIN TBL_DEPT 
+					WHERE EMP_NM = #{empNm}
+	</select>
+	<select id="orgDeptList" resultType="Emp">
+		SELECT EMP_ID,EMP_NM,DEPT_ID,JBGD_NM,MBL_TELNO,ROAD_NM_ADD,DEPT_NM,UP_DEPT_ID
+			FROM TBL_EMP 
+				NATURAL JOIN TBL_DEPT ORDER BY length (DEPT_ID)
+	</select>
+
+	
+
+	<select id="hobbyList" resultType="String" parameterType="String">
+		SELECT HOBBY_CODE
+			FROM TBL_EMP_HOBBY
+				WHERE EMP_ID = #{empId} 
+	</select>
+	
+	<select id="curentEmpId" resultType="Emp" parameterType="Emp">
+		SELECT EMP_ID
+			FROM TBL_EMP
+				ORDER BY length (EMP_ID) DESC,(EMP_ID) DESC
+	</select>
+
+	<insert id="insertEmp" parameterType="Emp">
+		INSERT INTO TBL_EMP
+			VALUES('E' || EMP_ID_SEQ.nextval,#{empNm},#{deptId},#{jbgdNm},#{mblTelNo},#{roadNmAdd})
+	</insert>
+	
+	<insert id="insertHobby" parameterType="String"> 
+		INSERT INTO TBL_EMP_HOBBY
+			VALUES(#{empId}, #{hoblist})
+	</insert>
+	
+	<insert id="updateEmp" parameterType="Emp">
+		INSERT INTO TBL_EMP
+			VALUES(#{empId},#{empNm},#{deptId},#{jbgdNm},#{mblTelNo},#{roadNmAdd})
+	</insert>
+	
+	<delete id="upDeleteEmp" parameterType="String">
+			DELETE
+				FROM TBL_EMP
+					WHERE EMP_ID = #{empId}
+	</delete>
+	
+	<delete id="upDeleteHobby" parameterType="String">
+			DELETE
+				FROM TBL_EMP_HOBBY
+					WHERE EMP_ID = #{empId}
+	</delete>
+	
+	<insert id="updateHobby" parameterType="String"> 
+		INSERT INTO TBL_EMP_HOBBY
+			VALUES(#{empId}, #{arrHob})
+	</insert>
+	
+	
+</mapper>

@@ -1,0 +1,23 @@
+server:
+  port: 9792
+
+spring:
+  datasource:
+    driverClassName: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@34.125.115.234:1521:xe
+    username: hj
+    password: 1234
+    hikari: 
+      pool-name: hikari-cp
+      connection-timeout: 60000
+      maximum-pool-size: 10
+      minimum-idle: 2
+      max-lifetime: 30000
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    check-template-location: true
